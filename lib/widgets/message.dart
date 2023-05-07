@@ -8,13 +8,18 @@ class Message extends StatelessWidget {
   const Message({
     Key? key,
     required this.messageType,
+    this.hasHistoricalData,
   }) : super(key: key);
 
   final MessageType messageType;
+  final bool? hasHistoricalData;
 
   Widget _errorMsg() {
     return Padding(
-      padding: const EdgeInsets.all(AppDimens.PADDING_S),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimens.PADDING_S,
+        vertical: AppDimens.PADDING_M,
+      ),
       child: Container(
         // height: 50,
         // color: Colors.amber,
@@ -28,15 +33,23 @@ class Message extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Ой, кажется, что-то сломалось!',
                     style: AppStyles.H,
                   ),
                   const SizedBox(height: 15),
-                  Text(
+                  const Text(
                     'Это бесплатная API, будь добр, не жамкай слишком часто запросы. Подожди немного и давай по новой...',
                     style: AppStyles.P1,
                   ),
+                  if (hasHistoricalData == true)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: Text(
+                        'Мы загрузили тебе исторические данные, чтобы не было так пусто',
+                        style: AppStyles.P1,
+                      ),
+                    ),
                 ],
               ),
             ),

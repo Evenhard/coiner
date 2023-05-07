@@ -1,8 +1,12 @@
 import 'package:crypto_app/pages/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:in_app_notification/in_app_notification.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('coiner');
+
   runApp(const MyApp());
 }
 

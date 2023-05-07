@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:in_app_notification/in_app_notification.dart';
 
+import '../api.dart';
 import '../resources/app_dimens.dart';
 import '../widgets/message.dart';
 
@@ -59,36 +60,11 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
     });
 
-    // For testing
-    // await Future.delayed(const Duration(milliseconds: 2500));
-
-    const url =
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&locale=en';
-    var response = await http.get(
-      Uri.parse(url),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-    );
+    List<CoinModel>? tempList = await Api().getCoinMarket(context);
 
     setState(() {
       isLoading = false;
+      coinMarket = tempList;
     });
-
-    if (response.statusCode == 200) {
-      setState(() {
-        coinMarket = coinModelFromJson(response.body);
-      });
-    } else {
-      print(response.statusCode);
-      InAppNotification.show(
-        context: context,
-        onTap: () => print('Notification tapped!'),
-        child: Message(
-          messageType: MessageType.error,
-        ),
-      );
-    }
   }
 }

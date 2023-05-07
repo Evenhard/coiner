@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:in_app_notification/in_app_notification.dart';
 
+import '../api.dart';
 import '../model/coin.dart';
 import '../resources/app_colors.dart';
 import '../widgets/message.dart';
@@ -210,37 +211,15 @@ class _CoinDetailState extends State<CoinDetail> {
       isLoading = true;
     });
 
-    // For testing
-    // await Future.delayed(const Duration(milliseconds: 2500));
-
-    String url =
-        'https://api.coingecko.com/api/v3/coins/${widget.item.id}/ohlc?vs_currency=usd&days=$days';
-    var response = await http.get(
-      Uri.parse(url),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
+    List<ChartModel>? tempList = await Api().getCoinChart(
+      context,
+      widget.item.id,
+      days,
     );
 
     setState(() {
       isLoading = false;
+      chart = tempList;
     });
-
-    if (response.statusCode == 200) {
-      Iterable x = jsonDecode(response.body);
-      setState(() {
-        chart = x.map((e) => ChartModel.fromJson(e)).toList();
-      });
-    } else {
-      print(response.statusCode);
-      InAppNotification.show(
-        context: context,
-        onTap: () => print('Notification tapped!'),
-        child: Message(
-          messageType: MessageType.error,
-        ),
-      );
-    }
   }
 }

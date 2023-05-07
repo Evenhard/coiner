@@ -44,7 +44,7 @@ class CoinsList extends StatelessWidget {
                 horizontal: AppDimens.PADDING_M,
               ),
               child: Text(
-                'Это бесплатная API, будь добр, не жамкай слишком часто запросы. Подожди немного и давай по новой...',
+                'Ой, кажется, данные где-то потерялись.\nМожет, их кто-то украл?',
                 style: AppStyles.H,
                 textAlign: TextAlign.center,
               ),

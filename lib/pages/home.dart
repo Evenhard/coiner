@@ -34,9 +34,12 @@ class _HomePageState extends State<HomePage> {
               child: Text('data'),
             ),
             Expanded(
-              child: CoinsList(
-                isLoading: isLoading,
-                list: coinMarket!,
+              child: RefreshIndicator(
+                onRefresh: () => getCoinMarket(),
+                child: CoinsList(
+                  isLoading: isLoading,
+                  list: coinMarket!,
+                ),
               ),
             ),
           ],
@@ -48,10 +51,14 @@ class _HomePageState extends State<HomePage> {
   bool isLoading = true;
 
   List<CoinModel>? coinMarket = [];
+
   Future<void> getCoinMarket() async {
     setState(() {
       isLoading = true;
     });
+
+    // For testing
+    // await Future.delayed(const Duration(milliseconds: 2500));
 
     const url =
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&locale=en';

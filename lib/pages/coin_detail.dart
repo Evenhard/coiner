@@ -5,10 +5,10 @@ import 'package:crypto_app/resources/app_dimens.dart';
 import 'package:crypto_app/resources/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../model/coin.dart';
 import '../resources/app_colors.dart';
+import 'coin_detail/chart.dart';
 
 class CoinDetail extends StatefulWidget {
   const CoinDetail({
@@ -23,15 +23,9 @@ class CoinDetail extends StatefulWidget {
 }
 
 class _CoinDetailState extends State<CoinDetail> {
-  late TrackballBehavior trackballBehavior;
-
   @override
   void initState() {
     getChart();
-    trackballBehavior = TrackballBehavior(
-      enable: true,
-      activationMode: ActivationMode.singleTap,
-    );
     super.initState();
   }
 
@@ -71,21 +65,13 @@ class _CoinDetailState extends State<CoinDetail> {
         backgroundColor: Colors.white,
         foregroundColor: AppColors.SELECTED_COLOR,
         // actions: _getActionButtons(context, theme, data),
-        // bottom: PreferredSize(
-        //   child: Container(
-        //     color: Colors.grey,
-        //     height: 1.0,
-        //   ),
-        //   preferredSize: const Size.fromHeight(0.0),
-        // ),
       ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
           child: Column(
             children: [
-              Text('data'),
-              const SizedBox(height: AppDimens.PADDING_S),
+              const SizedBox(height: AppDimens.PADDING_M),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -119,49 +105,10 @@ class _CoinDetailState extends State<CoinDetail> {
               Container(
                 height: 400,
                 // color: Colors.amber,
-                child: isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : chart == null || chart!.isEmpty
-                        ? const Center(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: AppDimens.PADDING_M),
-                              child: Text(
-                                'Это бесплатная API, будь добр, не жамкай слишком часто запросы. Подожди немного и давай по новой...',
-                                style: AppStyles.H,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          )
-                        : SfCartesianChart(
-                            trackballBehavior: trackballBehavior,
-                            zoomPanBehavior: ZoomPanBehavior(
-                              enablePinching: true,
-                              zoomMode: ZoomMode.x,
-                            ),
-                            series: <CandleSeries>[
-                              CandleSeries<ChartModel, num>(
-                                enableSolidCandles: true,
-                                enableTooltip: true,
-                                bullColor: AppColors.SPARK_GREEN,
-                                bearColor: AppColors.SPARK_RED,
-                                dataSource: chart!,
-                                xValueMapper: (ChartModel sales, _) =>
-                                    sales.time,
-                                lowValueMapper: (ChartModel sales, _) =>
-                                    sales.low,
-                                highValueMapper: (ChartModel sales, _) =>
-                                    sales.high,
-                                openValueMapper: (ChartModel sales, _) =>
-                                    sales.open,
-                                closeValueMapper: (ChartModel sales, _) =>
-                                    sales.close,
-                                animationDuration: 55,
-                              ),
-                            ],
-                          ),
+                child: Chart(
+                  isLoading: isLoading,
+                  chart: chart,
+                ),
               ),
               const SizedBox(height: AppDimens.PADDING_M),
               Container(
@@ -260,6 +207,9 @@ class _CoinDetailState extends State<CoinDetail> {
     setState(() {
       isLoading = true;
     });
+
+    // For testing
+    // await Future.delayed(const Duration(milliseconds: 2500));
 
     String url =
         'https://api.coingecko.com/api/v3/coins/${widget.item.id}/ohlc?vs_currency=usd&days=$days';

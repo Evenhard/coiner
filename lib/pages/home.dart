@@ -2,8 +2,10 @@ import 'package:crypto_app/model/coin.dart';
 import 'package:crypto_app/pages/home/coins_list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:in_app_notification/in_app_notification.dart';
 
 import '../resources/app_dimens.dart';
+import '../widgets/message.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -80,6 +82,13 @@ class _HomePageState extends State<HomePage> {
       });
     } else {
       print(response.statusCode);
+      InAppNotification.show(
+        context: context,
+        onTap: () => print('Notification tapped!'),
+        child: Message(
+          messageType: MessageType.error,
+        ),
+      );
     }
   }
 }

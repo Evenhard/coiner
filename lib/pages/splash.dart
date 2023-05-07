@@ -1,6 +1,9 @@
 import 'package:crypto_app/navBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:in_app_notification/in_app_notification.dart';
+
+import '../widgets/message.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -77,9 +80,11 @@ class _SplashPageState extends State<SplashPage> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NavBar()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NavBar(),
+                      ),
+                    );
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

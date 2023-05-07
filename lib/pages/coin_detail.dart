@@ -5,9 +5,11 @@ import 'package:crypto_app/resources/app_dimens.dart';
 import 'package:crypto_app/resources/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:in_app_notification/in_app_notification.dart';
 
 import '../model/coin.dart';
 import '../resources/app_colors.dart';
+import '../widgets/message.dart';
 import 'coin_detail/chart.dart';
 
 class CoinDetail extends StatefulWidget {
@@ -232,6 +234,13 @@ class _CoinDetailState extends State<CoinDetail> {
       });
     } else {
       print(response.statusCode);
+      InAppNotification.show(
+        context: context,
+        onTap: () => print('Notification tapped!'),
+        child: Message(
+          messageType: MessageType.error,
+        ),
+      );
     }
   }
 }

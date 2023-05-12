@@ -77,37 +77,41 @@ class _SplashPageState extends State<SplashPage> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: width * 0.15),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NavBar(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFffdb8a),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'Ворваться',
-                          style: TextStyle(
-                            // color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                child: Ink(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFffdb8a),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: InkWell(
+                    key: const Key('letMeInButton'),
+                    borderRadius: BorderRadius.circular(50),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NavBar(),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Ворваться',
+                            style: TextStyle(
+                              // color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                        RotationTransition(
-                          turns: AlwaysStoppedAnimation(310 / 360),
-                          child: Icon(Icons.arrow_forward_rounded),
-                        ),
-                      ],
+                          RotationTransition(
+                            turns: AlwaysStoppedAnimation(310 / 360),
+                            child: Icon(Icons.arrow_forward_rounded),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

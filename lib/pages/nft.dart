@@ -1,24 +1,24 @@
-import 'package:crypto_app/model/coin.dart';
-import 'package:crypto_app/pages/home/coins_list.dart';
+import 'package:crypto_app/model/nft_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:in_app_notification/in_app_notification.dart';
 
 import '../api.dart';
 import '../resources/app_dimens.dart';
-import '../widgets/message.dart';
+import 'home/coins_list.dart';
+import 'nft/nft_list.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class NftPage extends StatefulWidget {
+  const NftPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _NftPageState createState() => _NftPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _NftPageState extends State<NftPage> {
   @override
   void initState() {
-    getCoinMarket();
+    getNftList();
     super.initState();
   }
 
@@ -32,12 +32,16 @@ class _HomePageState extends State<HomePage> {
         width: width,
         child: Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.all(AppDimens.PADDING_S),
+              child: Text('data'),
+            ),
             Expanded(
               child: RefreshIndicator(
-                onRefresh: () => getCoinMarket(),
-                child: CoinsList(
+                onRefresh: () => getNftList(),
+                child: NftList(
                   isLoading: isLoading,
-                  list: coinMarket!,
+                  list: nftList!,
                 ),
               ),
             ),
@@ -49,18 +53,18 @@ class _HomePageState extends State<HomePage> {
 
   bool isLoading = true;
 
-  List<CoinModel>? coinMarket = [];
+  List<NftCollectionModel>? nftList = [];
 
-  Future<void> getCoinMarket() async {
+  Future<void> getNftList() async {
     setState(() {
       isLoading = true;
     });
 
-    List<CoinModel>? tempList = await Api().getCoinMarket(context);
+    List<NftCollectionModel>? tempList = await Api().getNftList(context);
 
     setState(() {
       isLoading = false;
-      coinMarket = tempList;
+      nftList = tempList;
     });
   }
 }

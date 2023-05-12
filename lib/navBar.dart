@@ -1,5 +1,6 @@
-import 'package:crypto_app/pages/empty.dart';
 import 'package:crypto_app/pages/home.dart';
+import 'package:crypto_app/pages/nft.dart';
+import 'package:crypto_app/pages/profile.dart';
 import 'package:crypto_app/resources/app_colors.dart';
 import 'package:crypto_app/resources/app_dimens.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,10 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _currentIndex = 0;
 
-  List<Widget> pages = [
+  List<Widget> pages = const [
     HomePage(),
-    EmptyPage(),
-    EmptyPage(),
-    EmptyPage(),
+    NftPage(),
+    ProfilePage(),
   ];
 
   @override
@@ -54,29 +54,14 @@ class _NavBarState extends State<NavBar> {
                 padding: const EdgeInsets.only(
                     top: AppDimens.BOTTOMMENU_ICON_PADDING),
                 child: SvgPicture.asset(
-                  'assets/icons/menu_1.svg',
+                  'assets/icons/menu_2.svg',
                   height: 22,
                   color: _currentIndex == 0
                       ? AppColors.SELECTED_COLOR
                       : AppColors.UNSELECTED_COLOR,
                 ),
               ),
-              label: 'Главная',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Padding(
-                padding: const EdgeInsets.only(
-                    top: AppDimens.BOTTOMMENU_ICON_PADDING),
-                child: SvgPicture.asset(
-                  'assets/icons/menu_2.svg',
-                  height: 22,
-                  color: _currentIndex == 1
-                      ? AppColors.SELECTED_COLOR
-                      : AppColors.UNSELECTED_COLOR,
-                ),
-              ),
-              label: 'Рынок',
+              label: 'Крипта',
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
@@ -86,12 +71,12 @@ class _NavBarState extends State<NavBar> {
                 child: SvgPicture.asset(
                   'assets/icons/menu_3.svg',
                   height: 22,
-                  color: _currentIndex == 2
+                  color: _currentIndex == 1
                       ? AppColors.SELECTED_COLOR
                       : AppColors.UNSELECTED_COLOR,
                 ),
               ),
-              label: 'Портфолио',
+              label: 'NFT',
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
@@ -101,7 +86,7 @@ class _NavBarState extends State<NavBar> {
                 child: SvgPicture.asset(
                   'assets/icons/menu_4.svg',
                   height: 22,
-                  color: _currentIndex == 3
+                  color: _currentIndex == 2
                       ? AppColors.SELECTED_COLOR
                       : AppColors.UNSELECTED_COLOR,
                 ),
